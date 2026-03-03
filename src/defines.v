@@ -24,7 +24,10 @@
 `define SRL  4'b0111 // just shift right
 `define SRA  4'b1000 // shift right but remain original sign
 `define SLT  4'b1001 // set less than
-`define SLTU 4'b1010 
+`define SLTU 4'b1010
+`define LUI 4'b1011
+`define B_PASS 4'b1100
+
 
 
  //immSrc

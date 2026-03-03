@@ -23,7 +23,9 @@ always @(*) begin
     //더 최신버전인 ex_mem을 우선적으로 사용
     if(uses_rs1) begin
         if(ex_mem_regwrite && ex_mem_rd != 0 && ex_mem_rd == rs1) begin
+            
             forwarding_a_sel=2'b01;
+
         end
         else if(mem_wb_regwrite && mem_wb_rd != 0 && mem_wb_rd == rs1) begin
             forwarding_a_sel=2'b10;
@@ -33,7 +35,9 @@ always @(*) begin
 
     if(uses_rs2) begin
         if(ex_mem_regwrite && ex_mem_rd != 0 && ex_mem_rd == rs2) begin
+
             forwarding_b_sel=2'b01;
+
         end
         else if(mem_wb_regwrite && mem_wb_rd != 0 && mem_wb_rd == rs2) begin
             forwarding_b_sel=2'b10;
@@ -45,6 +49,7 @@ always @(*) begin
 
         if(ex_mem_regwrite && ex_mem_rd != 0 && ex_mem_rd == rs2) begin
             forwarding_rdata2=2'b01;
+
         end
     
         else if(mem_wb_regwrite && mem_wb_rd != 0 && mem_wb_rd == rs2) begin

@@ -5,6 +5,7 @@ module reg_IF_ID(
     input wire [31:0] if_pc,
     input wire [31:0] if_pc_plus_4,
     input wire [4:0] stall,
+    input wire flush,
 
     output reg [31:0] id_instr,
     output reg [31:0] id_pc,
@@ -17,7 +18,7 @@ module reg_IF_ID(
 
 always @(posedge clk) begin
 
-        if(rst ) begin
+        if(rst || flush ) begin
             id_instr <= 32'h0000_0013; //addi x0 x0 0
         end
 
@@ -26,7 +27,7 @@ always @(posedge clk) begin
             id_pc <= id_pc;
             id_pc_plus_4 <= id_pc_plus_4;
         end
-
+       
         else begin
         id_instr <= if_instr;
         id_pc <= if_pc;

@@ -3,7 +3,7 @@ module stage_EX(
     //input EX signal
     input wire a_sel, 
     input wire b_sel, 
-    input wire [1:0] alu_op, 
+    input wire [2:0] alu_op, 
     input wire [1:0] pc_op,
     
     input wire [1:0] forwarding_a_sel,
@@ -22,6 +22,7 @@ module stage_EX(
 
     //output sig
     output wire [1:0] pcsrc,
+    output wire flush,
 
     //output data
     output wire [31:0] branch_output,
@@ -96,7 +97,8 @@ Branch_Unit branch_inst(
     .BrEq(BrEq),
     .BrLtU(BrLtU),
     .BrLt(BrLt),
-    .funct3(funct3)
+    .funct3(funct3),
+    .flush(flush)
 );
 
 Adder branch_adder_inst(

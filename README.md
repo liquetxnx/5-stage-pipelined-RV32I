@@ -1,5 +1,5 @@
 # Notice
 
-This project is on going. Only Data Hazard is verified. 
+This project is on going. Control Hazard, Data Hazard are verified
 
-Now i am implementing the solution of control hazard.
+Now I am implementing FPGA verification.

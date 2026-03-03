@@ -8,6 +8,7 @@ module Top_Module(
 //control signal
 wire [4:0] stall;
 wire [1:0] if_in_pcsrc;
+wire flush;
 
 
 
@@ -34,7 +35,7 @@ wire [31:0] id_out_rdata2;
 //ID output signal
 wire id_out_a_sel;
 wire id_out_b_sel;
-wire [1:0] id_out_alu_op;
+wire [2:0] id_out_alu_op;
 wire [1:0] id_out_branch_flag;
 wire id_out_regwrite;
 wire id_out_memwrite;
@@ -45,7 +46,7 @@ wire id_out_uses_rs2;
 //EX wire
 wire ex_in_a_sel;
 wire ex_in_b_sel;
-wire [1:0] ex_in_alu_op;
+wire [2:0] ex_in_alu_op;
 wire [1:0] ex_in_branch_flag;
 wire ex_in_regwrite;
 wire ex_in_memwrite;
@@ -119,6 +120,7 @@ reg_IF_ID reg_if_id_inst(
     .clk(clk),
     .rst(rst),
     .stall(stall),
+    .flush(flush),
     .if_instr(if_out_instr),
     .if_pc(if_out_pc),
     .if_pc_plus_4(if_out_pc4),
@@ -160,7 +162,7 @@ stage_ID id_inst(
 Hazard_Unit hazard_inst(
     .uses_rs1(id_out_uses_rs1),
     .uses_rs2(id_out_uses_rs2),
-
+    .memwrite(id_out_memwrite),
     .rs1(id_in_instr[19:15]),
     .rs2(id_in_instr[24:20]),
 
@@ -177,6 +179,7 @@ reg_ID_EX reg_id_ex_inst(
     .clk(clk),
     .rst(rst),
     .stall(stall),
+    .flush(flush),
 
 
     //from Reg_File
@@ -273,6 +276,7 @@ stage_EX ex_inst(
     .mem_wb_wd(wb_data),
 
     .pcsrc         (ex_out_pcsrc),
+    .flush         (flush),
 
     .branch_output (ex_out_branch_output),
     .alu_output    (ex_out_alu_output)
@@ -287,7 +291,7 @@ Mux_4to1 rdata2_mux_inst(
     .sel(forwarding_rdata2),
     .a(ex_in_rdata2),
     .b(mem_in_alu_output),
-    .c(wb_in_alu_output),
+    .c(wb_data),
     .d(0),
     .out(rdata2_for_forwarding)
 );

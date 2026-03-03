@@ -11,8 +11,11 @@ module Branch_Unit(
 
     input wire [2:0] funct3,
 
-    output reg [1:0] pcsrc
+    output reg [1:0] pcsrc,
+    output reg flush
 );
+
+
 
 always @(*) begin
     if(pc_op == 2'b01) begin
@@ -32,8 +35,16 @@ always @(*) begin
     else begin
         pcsrc = pc_op;
     end
-
 end
 
+always @(*) begin
+    if(pcsrc != 2'b00) begin
+        flush=1'b1;
+    end
+    else begin
+        flush=1'b0;
+    end
+
+end
 
 endmodule

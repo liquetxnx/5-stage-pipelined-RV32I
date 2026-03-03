@@ -13,7 +13,7 @@ module stage_ID(
 
     output wire id_a_sel,
     output wire id_b_sel,
-    output wire [1:0] id_alu_op,
+    output wire [2:0] id_alu_op,
     output wire [1:0] id_pc_op,
     output wire id_regwrite,
     output wire id_memwrite,

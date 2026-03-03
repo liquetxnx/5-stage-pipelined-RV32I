@@ -8,6 +8,7 @@ module reg_ID_EX(
     input wire clk,
     input wire rst,
     input wire [4:0] stall,
+    input wire flush,
 
     //from Reg_File
     input wire [31:0] id_rdata1,
@@ -20,7 +21,7 @@ module reg_ID_EX(
     //from Control_unit
     input wire id_a_sel,
     input wire id_b_sel,
-    input wire [1:0] id_alu_op,
+    input wire [2:0] id_alu_op,
     input wire [1:0] id_branch_flag,
     input wire id_regwrite,
     input wire id_memwrite,
@@ -51,7 +52,7 @@ module reg_ID_EX(
     //control signal
     output reg ex_a_sel,
     output reg ex_b_sel,
-    output reg [1:0] ex_alu_op,
+    output reg [2:0] ex_alu_op,
     output reg [1:0] ex_branch_flag,
     output reg ex_regwrite,
     output reg ex_memwrite,
@@ -77,7 +78,7 @@ module reg_ID_EX(
 
 always @(posedge clk) begin
     
-    if(rst || stall[2]) begin
+    if(rst || stall[2] || flush) begin
         ex_b_sel <= 0;
         ex_alu_op <= 0;
         ex_branch_flag <= 0;

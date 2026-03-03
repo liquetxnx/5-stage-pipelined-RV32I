@@ -27,9 +27,9 @@ reg [31:0] rg [31:0];
 
 
 always @(posedge clk) begin
-    rg[0] = 32'h0; //always fix x0 to 0
+    rg[0] <= 32'h0; //always fix x0 to 0
     if (rst) begin
-        rg[2] = `STACK_POINTER; //fix stack pointer 
+        rg[2] <= `STACK_POINTER; //fix stack pointer 
     end
 
     if(regwrite==1 && rd != 5'b0) begin
