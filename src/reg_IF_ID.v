@@ -20,6 +20,8 @@ always @(posedge clk) begin
 
         if(rst || flush ) begin
             id_instr <= 32'h0000_0013; //addi x0 x0 0
+            id_pc <= 0;
+            id_pc_plus_4 <= 0;
         end
 
         else if (stall[3]) begin

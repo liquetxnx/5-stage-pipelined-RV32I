@@ -12,7 +12,7 @@ Now I am implementing FPGA verification.
 - [0. TL/DR](#0-tldr)
 - [1. Project Overview](#1-project-overview)
 - [2. Architecture](#2-architecture)
-- [3. Memory Design](#3-memory-design)
+- [3. Hazard Logic](#3-hazard-logic)
 - [4. Supported Instructions](#4-supported-instructions)
 - [5. Verification](#5-verification)
 - [6. How to Run?](#6-how-to-run)
@@ -69,7 +69,7 @@ Now I am implementing FPGA verification.
 - Harvard Architecture
 
 - Block Diagaram
-img upload soon
+![Block diagram](img/block_diagram.jpg)
 
 - Top module
 
@@ -112,32 +112,18 @@ img upload soon
     - stage_WB
         - WB_MUX
 
-# 3. Memory Design
-## Endians
-- Instrution is stored by 1-byte little endians in IM.
-    - For example, Instruction `0x01020304` is stored by `04 03 02 01` in IM
+# 3. Hazard Logic
+//Describe what I have implmented 
+// update soon
 
-- Data Memory is not consiered .
+1. Data Hazard (RAW)
+    - ALU-ALU dependency
+        : By Forwarding to EX stage
+    - ALU - Store Dependency
+        : By Forwarding to ID stage
+    - Load - ALU Dependency
+        : By Stall
 
-//여기까지 3/3
-
-## Addressing
-### Insturtion Memory(IM)
-- PC is byte address (increments by 4 byte) :
-    - pc_next = pc + 4 (unless branch/jump)
-- IM is stored as 8-bit (1-bytes) ( `mem[8192][8]` )
-- Size is `8KB`
-- Instruction fetch uses in bytes and by little - endians :
-    - pc = current pc address (1bytes)
-    - Instr = [8bytes, 8bytes, 8bytes, 8bytes] = [IM[pc+3], IM[pc+2], IM[pc+1], IM[pc]]
-
-### Data Memory
-- Data memory is also stored as 32-bit words like IM (array of `mem[word_index]`)
-- Size is `16KB`
-- Effective address is word addresses; 
-    - `mem[4096][32]`
-    - DMEM_index = alu_result >> 2
-    - It is implemented by DMEM_index = alu_result[13:2]
 
 
 
